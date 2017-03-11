@@ -40,11 +40,16 @@ test_and_clone() {
     repo=$1
     dir=$2
     if [ -e $dir ]; then
-        ( git -C $dir fetch --all --prune )
+        (
+            cd $dir
+            git fetch --all --prune
+            git fetch --tags --prune
+            git rebase --autostash origin/master
+        )
     else
         git clone $repo $dir
+        git -C $dir checkout master
     fi
-    git -C $dir checkout origin/master
 }
 
 cd $top_dir/projects
