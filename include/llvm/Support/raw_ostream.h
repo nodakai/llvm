@@ -491,6 +491,9 @@ raw_ostream &outs();
 /// errs() << "foo" << "bar";
 raw_ostream &errs();
 
+#define KAI_DBG_ON (bool(::getenv("KAI_DBG")))
+#define PRT(...) (KAI_DBG_ON ? (llvm::errs() << __FILE__ << ':' << __LINE__ << ':' << __PRETTY_FUNCTION__ << ':' << ' ' << __VA_ARGS__ << '\n' ): llvm::errs())
+
 /// This returns a reference to a raw_ostream which simply discards output.
 raw_ostream &nulls();
 
